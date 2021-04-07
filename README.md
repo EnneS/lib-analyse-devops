@@ -11,3 +11,4 @@ A chaque feature, on recréer une branch depuis dev. Une fois la feature fini, o
 Puis on fait un pull request de la branch feature dans la branch dev. Si tout fonctionne correctement on push la branch dev dans la branch master.
 </p>
 <h2>Feedback:</h2>
+<strong>C'est de la merde</strong>
