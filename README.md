@@ -1,3 +1,5 @@
+![GitHub Workflow Status](https://img.shields.io/github/workflow/status/ennes/lib-analyse-devops/CI)
+
 <h2>Fonctionnalitées:</h2>
 
 <h2>Outils:</h2>
