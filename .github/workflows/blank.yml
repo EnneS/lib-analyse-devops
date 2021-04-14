@@ -20,7 +20,7 @@ jobs:
       # Build the project
       - name: Building
         run: | 
-          mvn build
+          mvn install
 
       # Run a set of tests
       - name: Running Dataframe TestSize test
