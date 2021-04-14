@@ -12,50 +12,6 @@ public class Dataframe {
 		setData(data);
 	}
 	
-//	public Dataframe(String csv) 
-//	{
-//		ArrayList<ArrayList<String>> lines = new ArrayList<ArrayList<String>>();
-//		try {
-//			Scanner fileScanner = new Scanner(new File(csv));
-//			while(fileScanner.hasNextLine()) {
-//				ArrayList<String> line = new ArrayList<String>();
-//				String lineString = fileScanner.nextLine();
-//				Scanner rowScanner = new Scanner(lineString);
-//				rowScanner.useDelimiter("");
-//				Boolean escape = false;
-//				String el = "";
-//				while(rowScanner.hasNext()) {
-//					String c = rowScanner.next();
-//					if(c.charAt(0) == '"'){ // Escaping
-//						if(escape) // Add the escaped " char to the element
-//							el += c;
-//						escape = !escape;
-//					} else if(!escape && c.charAt(0) == ',') { // End of element
-//						if(el.length() > this.maxElementLength)	// Used for pretty printing
-//							this.maxElementLength = el.length() + 1;
-//						if(el.length() > 0 && el.charAt(el.length()-1) == '"') // Removes last " char of the element
-//							el = el.substring(0, el.length() - 1);
-//						line.add(el);
-//						el = "";
-//					} else { // Element
-//						el += c;
-//					}
-//				}
-//				line.add(el); // Last element of the line (last column)
-//				lines.add(line);
-//				rowScanner.close();
-//			}
-//			fileScanner.close();
-//		} catch (FileNotFoundException e) {
-//			e.printStackTrace();
-//		}
-//		try {
-//			setData(lines);
-//		} catch (Exception e) {
-//			e.printStackTrace();
-//		}
-//	}
-	
 	public Dataframe(String csv) 
 	{
 		ArrayList<ArrayList> columns = new ArrayList<ArrayList>();
