@@ -16,12 +16,34 @@ jobs:
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v2
+      
+      # Build the project
+      - name: Building
+        run: | 
+          mvn build
 
-      # Runs a set of commands using the runners shell
-      - name: Running Dataframe JUnit tests
+      # Run a set of tests
+      - name: Running Dataframe TestSize test
         run: |
-          echo "Compiling & Running tests for dataframe"
-          mvn -Dtest=DataframeTest test
+          echo "Running Dataframe TestSize test"
+          mvn -Dtest=DataframeTest#testGetCell test
+          
+      - name: Running Dataframe GetCell test
+        run: |
+          echo "Running Dataframe GetCell test"
+          mvn -Dtest=DataframeTest#testGetCell test
+
+      - name: Running Dataframe WrongDataframeCreation test
+        run: |
+          echo "Running Dataframe WrongDataframeCreation test"
+          mvn -Dtest=DataframeTest#testWrongOneTypePerColonne test
+          
+      - name: Running Dataframe ValidDataframeCreation test
+        run: |
+          echo "Running Dataframe ValidDataframeCreation test"
+          mvn -Dtest=DataframeTest#testGoodOneTypePerColonne test
+  
+
 
 
     
