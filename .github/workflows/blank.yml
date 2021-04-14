@@ -21,7 +21,7 @@ jobs:
       - name: Running JUnit tests
         run: |
           echo "Compiling & Running tests for dataframe"
-          mvn -Dtest=Dataframetest test
+          mvn -Dtest=DataframeTest test
 
 
     
