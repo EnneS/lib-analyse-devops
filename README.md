@@ -1,4 +1,4 @@
-![GitHub Workflow Status](https://img.shields.io/github/workflow/status/ennes/lib-analyse-devops/CI)
+![GitHub Workflow Status](https://img.shields.io/github/workflow/status/ennes/lib-analyse-devops/CI) ![GitHub release (latest by date including pre-releases)](https://img.shields.io/github/v/release/ennes/lib-analyse-devops?include_prereleases)
 
 <h2>Fonctionnalitées:</h2>
 
