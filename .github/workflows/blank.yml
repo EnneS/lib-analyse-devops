@@ -23,25 +23,16 @@ jobs:
           mvn install
 
       # Run a set of tests
-      - name: Running Dataframe TestSize test
+      - name: Running tests
         run: |
-          echo "Running Dataframe TestSize test"
-          mvn -Dtest=DataframeTest#testGetCell test
+          echo "Running tests"
+          mvn test
           
-      - name: Running Dataframe GetCell test
-        run: |
-          echo "Running Dataframe GetCell test"
-          mvn -Dtest=DataframeTest#testGetCell test
-
-      - name: Running Dataframe WrongDataframeCreation test
-        run: |
-          echo "Running Dataframe WrongDataframeCreation test"
-          mvn -Dtest=DataframeTest#testWrongOneTypePerColonne test
-          
-      - name: Running Dataframe ValidDataframeCreation test
-        run: |
-          echo "Running Dataframe ValidDataframeCreation test"
-          mvn -Dtest=DataframeTest#testGoodOneTypePerColonne test
+      # Publishing the tests report
+      - name: Publish Test Report
+        uses: scacap/action-surefire-report@v1
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
   
 
 
