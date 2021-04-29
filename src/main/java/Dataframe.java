@@ -2,29 +2,40 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Scanner;
+import java.util.HashMap;
 
 public class Dataframe {
-	private ArrayList<ArrayList> data;
+	private HashMap<String, ArrayList> data;
 	private int maxElementLength = 0;
 	
 
-	public Dataframe(ArrayList<ArrayList> data) throws Exception {
+	public Dataframe(HashMap<String, ArrayList> data) throws Exception {
 		setData(data);
 	}
 	
 	public Dataframe(String csv) 
 	{
-		ArrayList<ArrayList> columns = new ArrayList<ArrayList>();
+//		System.out.println("Debut de dataframe");
+		HashMap<String, ArrayList> columns = new HashMap<String, ArrayList>();
 		try {
 			Scanner fileScanner = new Scanner(new File(csv));
+			
+			//List of the columns label
+			ArrayList<String> labels = new ArrayList<String>();
+			
+			//Index of column and row
+			int rowIdx = 0;
+			
 			while(fileScanner.hasNextLine()) {
 				int columnIdx = 0;
 				String lineString = fileScanner.nextLine();
+//				System.out.println(lineString);
+				
 				Scanner rowScanner = new Scanner(lineString);
 				rowScanner.useDelimiter("");
 				Boolean escape = false;
 				String el = "";
-				int rowIdx = 0;
+				
 				while(rowScanner.hasNext()) {
 					String c = rowScanner.next();
 					if(c.charAt(0) == '"'){ // Escaping
@@ -36,17 +47,31 @@ public class Dataframe {
 							this.maxElementLength = el.length() + 1;
 						
 						if(el.length() > 0 && el.charAt(el.length()-1) == '"') // Removes last " char of the element
-							el = el.substring(0, el.length() - 1);		
-												
-						addElementAndCreateRowIfNecessary( columns, el, columnIdx);
+							el = el.substring(0, el.length() - 1);	
 						
-						columnIdx++;						
+						if(rowIdx == 0) //If first row, it the label value
+							labels.add(el.trim());
+						else            //Otherwise we add it to the HashMap
+							addElementAndCreateRowIfNecessary(columns, labels.get(columnIdx), el);
+						
+						columnIdx++;
 						el = "";
 					} else { // Element
 						el += c;
 					}
-				}				
-				addElementAndCreateRowIfNecessary( columns, el, columnIdx);
+				}	
+				
+				if(el.length() > this.maxElementLength)	// Used for pretty printing
+					this.maxElementLength = el.length() + 1;
+				
+				if(el.length() > 0 && el.charAt(el.length()-1) == '"') // Removes last " char of the element
+					el = el.substring(0, el.length() - 1);	
+				
+				if(rowIdx == 0) //If first row, it the label value
+					labels.add(el.trim());
+				else if(!el.equals(""))          //Otherwise we add it to the HashMap
+					addElementAndCreateRowIfNecessary(columns, labels.get(columnIdx), el);
+				
 				rowIdx++;
 				rowScanner.close();
 			}
@@ -58,15 +83,18 @@ public class Dataframe {
 	}
 	
 	//Method for constructor
-	public void addElementAndCreateRowIfNecessary(ArrayList<ArrayList> columns, String el, int columnIdx)
+	public void addElementAndCreateRowIfNecessary(HashMap<String, ArrayList> columns, String label, String el)
 	{
 		boolean foundType = false;
+		//Remove unnecessary space
+		el = el.trim();
 		//Test if the column already exist
-		if(columnIdx < columns.size()) {
+		if(columns.containsKey(label)) {
+//			System.out.println("Ajout au label " + label + " l'élément " + el);
 			try {
 				int elToAdd = Integer.parseInt(el); //If is Integer
 				foundType = true;
-				columns.get(columnIdx).add(Integer.parseInt(el));
+				columns.get(label).add(elToAdd);
 			} catch(Exception e) {}//Nothing to do for the exception
 			
 
@@ -74,18 +102,20 @@ public class Dataframe {
 				try {
 					float elToAdd = Float.parseFloat(el); //If is float
 					foundType = true;
-					columns.get(columnIdx).add(Float.parseFloat(el));
+					columns.get(label).add(elToAdd);
 				} catch(Exception e) {}//Nothing to do for the exception
 			
 			if(!foundType)						  //Otherwise we add it like that
-				columns.get(columnIdx).add(el);
-		} else {
-
+				columns.get(label).add(el);
+		} else {	
+//			System.out.println("Création du label " + label);
+//			System.out.println("Ajout au label " + el);
+			
 			try {
 				int elToAdd = Integer.parseInt(el); //If is Integer
 				foundType = true;
-				columns.add(new ArrayList<Integer>());
-				columns.get(columnIdx).add(Integer.parseInt(el));
+				columns.put(label, new ArrayList<Integer>());
+				columns.get(label).add(elToAdd);
 			} catch(Exception e) {}//Nothing to do for the exception
 			
 
@@ -93,13 +123,15 @@ public class Dataframe {
 				try {
 					float elToAdd = Float.parseFloat(el); //If is float
 					foundType = true;
-					columns.add(new ArrayList<Float>());
-					columns.get(columnIdx).add(Float.parseFloat(el));
+					columns.put(label, new ArrayList<Float>());
+					columns.get(label).add(elToAdd);
 				} catch(Exception e) {}//Nothing to do for the exception
 			
 			if(!foundType)						  //Otherwise we add it like that
-				columns.add(new ArrayList<String>());
-				columns.get(columnIdx).add(el);							
+			{
+				columns.put(label, new ArrayList<String>());
+				columns.get(label).add(el);		
+			}
 		}
 	}
 	
@@ -109,24 +141,39 @@ public class Dataframe {
 	 */
 	
 	//Getters
-	private ArrayList<ArrayList> getData() {
+	private HashMap<String, ArrayList> getData() {
 		return data;
 	}
 	
-	public Object getCell(int i, int j) {
-		return this.data.get(i).get(j);
+	public Object getCell(String label, int j) throws Exception
+	{
+		if(this.getData().containsKey(label) && this.getData().get(label).size() > j && j > 0)
+			return this.getData().get(label).get(j);
+		else
+			throw new Exception("Le label ou la ligne " + j + " n'exsite pas");
+		
 	}
 	
 	public int getNbLines() {
-		return this.data.size();
+		if(this.data.size() == 0)
+			return 0;
+		else {
+			Object[] keys =  this.getData().keySet().toArray(); //Get the keys
+//			for(int i = 0; i < 88; i++) {
+//				System.out.print(this.data.get(keys[0]).get(i));
+//				System.out.print(" - " + this.data.get(keys[1]).get(i));
+//				System.out.println(" - " + this.data.get(keys[2]).get(i));
+//			}
+			return this.getData().get(keys[0]).size(); //Send the number of lines of the first column given that every column have the same amount of lines
+		}
 	}
 	
 	public int getNbColumns() {
-		return this.data.size() > 0 ? this.data.get(0).size() : 0;
+		return this.getData().size();
 	}
 	
 	//Setters
-	private void setData(ArrayList<ArrayList> data) throws Exception 
+	private void setData(HashMap<String, ArrayList> data) throws Exception 
 	{		
 		if(!Dataframe.isValidDataframe(data))
 			throw new Exception("Erreur dans la structure de données du dataframe");
@@ -139,25 +186,24 @@ public class Dataframe {
 	 * Validation Methods
 	 */
 	
-	public static boolean isValidDataframe(ArrayList<ArrayList> dataframe)
+	public static boolean isValidDataframe(HashMap<String, ArrayList>  dataframe)
 	{
-		boolean isValide = true;
 		int j = 0;
-		while(isValide && j < dataframe.size()) {
-			ArrayList line = dataframe.get(j);
-			int i = 0;
-			String type = "";
-			if(line.size() > 0)
-				type = line.get(i).getClass().getName();
+		for(String key: dataframe.keySet()) {
+			ArrayList line = dataframe.get(key);
+			String type = "";	
 			
-			while(isValide && i < line.size()) {
-				if(line.get(i).getClass().getName() != type)
-					isValide = false;
-				i++;
+			if(line.size() > 0)
+				type = line.get(0).getClass().getName();
+			
+			
+			for(Object o: line) {
+				if(o.getClass().getName() != type)
+					return false;
 			}
 			j++;
 		}
-		return isValide;
+		return true;
 	}
 	
 	
@@ -167,8 +213,24 @@ public class Dataframe {
 	
 	private String lineToString(int i){
 		String s = "";
-		for(Object element : data.get(i)) {
-			String elementTmp = element.toString();
+		for(String key: this.getData().keySet()) {
+			String elementTmp = "";
+			try {
+				elementTmp = this.getCell(key, i).toString();
+			} catch(Exception e) {}
+			
+			while(elementTmp.length() < this.maxElementLength)
+				elementTmp += " ";
+			s += elementTmp;
+		}
+		s += "\t\n";
+		return s;
+	}
+	
+	private String labelsToString(){
+		String s = "";
+		for(String key: this.getData().keySet()) {
+			String elementTmp = key;
 			while(elementTmp.length() < this.maxElementLength)
 				elementTmp += " ";
 			s += elementTmp;
@@ -179,7 +241,9 @@ public class Dataframe {
 	
 	public String toString() {
 		String s = "";
-		for(int i = 0; i < this.data.size(); i++) {
+		s += labelsToString();
+		
+		for(int i = 0; i < this.getNbLines(); i++) {
 			s += lineToString(i);
 		}
 		return s;
