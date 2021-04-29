@@ -169,6 +169,7 @@ public class DataframeTest {
 	@Test
 	public void testToStringNotNull()
 	{
+		System.out.println(d);
 		assertNotEquals("", d.toString());
 	}
 }

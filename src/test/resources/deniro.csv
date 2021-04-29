@@ -4,8 +4,8 @@ Year,Score,Prix,Title
 1970,73,0.7,"Hi, Mom!"
 1971,40,0.8,Born to Win
 1973,98,0.9,Mean Streets
-1973,88,0.10,Bang the Drum Slowly
-1974,97,0.11,"The Godfather, Part II"
+1973,88,0.100000,Bang the Drum Slowly
+1974,97,0.11,"""The Godfather, Part II"""
 1976,41,0.12,The Last Tycoon
 1976,99,0.13,Taxi Driver
 1977,47,0.14,1900
@@ -85,4 +85,4 @@ Year,Score,Prix,Title
 2015,60,0.88,Joy
 2015,26,0.89,Heist
 2015,61,0.90,The Intern
-2016,11,0.91,Dirty Grandpa
+2016,11,0.91,"""Dirty Grandpa"""
