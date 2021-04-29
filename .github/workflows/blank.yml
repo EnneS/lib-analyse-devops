@@ -23,26 +23,27 @@ jobs:
           mvn install
 
       # Run a set of tests
-      - name: Running Dataframe TestSize test
+      - name: Running tests
         run: |
-          echo "Running Dataframe TestSize test"
-          mvn -Dtest=DataframeTest#testGetCell test
+          echo "Running tests"
+          mvn test
           
-      - name: Running Dataframe GetCell test
-        run: |
-          echo "Running Dataframe GetCell test"
-          mvn -Dtest=DataframeTest#testGetCell test
+      # Publishing the tests report
+      - name: Publish Test Report
+        uses: scacap/action-surefire-report@v1
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Running Dataframe WrongDataframeCreation test
-        run: |
-          echo "Running Dataframe WrongDataframeCreation test"
-          mvn -Dtest=DataframeTest#testWrongOneTypePerColonne test
-          
-      - name: Running Dataframe ValidDataframeCreation test
-        run: |
-          echo "Running Dataframe ValidDataframeCreation test"
-          mvn -Dtest=DataframeTest#testGoodOneTypePerColonne test
-  
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v1
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          flags: unittests
+          env_vars: OS,PYTHON
+          name: codecov-umbrella
+          fail_ci_if_error: true
+          path_to_write_report: ./coverage/codecov_report.txt
+          verbose: true  
 
 
 
