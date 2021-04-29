@@ -13,72 +13,69 @@ public class Dataframe {
 		setData(data);
 	}
 	
-	public Dataframe(String csv) 
+	public Dataframe(String csv)  throws FileNotFoundException
 	{
 //		System.out.println("Debut de dataframe");
 		HashMap<String, ArrayList> columns = new HashMap<String, ArrayList>();
-		try {
-			Scanner fileScanner = new Scanner(new File(csv));
-			
-			//List of the columns label
-			ArrayList<String> labels = new ArrayList<String>();
-			
-			//Index of column and row
-			int rowIdx = 0;
-			
-			while(fileScanner.hasNextLine()) {
-				int columnIdx = 0;
-				String lineString = fileScanner.nextLine();
+		
+		Scanner fileScanner = new Scanner(new File(csv));
+		
+		//List of the columns label
+		ArrayList<String> labels = new ArrayList<String>();
+		
+		//Index of column and row
+		int rowIdx = 0;
+		
+		while(fileScanner.hasNextLine()) {
+			int columnIdx = 0;
+			String lineString = fileScanner.nextLine();
 //				System.out.println(lineString);
-				
-				Scanner rowScanner = new Scanner(lineString);
-				rowScanner.useDelimiter("");
-				Boolean escape = false;
-				String el = "";
-				
-				while(rowScanner.hasNext()) {
-					String c = rowScanner.next();
-					if(c.charAt(0) == '"'){ // Escaping
-						if(escape) // Add the escaped " char to the element
-							el += c;
-						escape = !escape;
-					} else if(!escape && c.charAt(0) == ',') { // End of element
-						if(el.length() > this.maxElementLength)	// Used for pretty printing
-							this.maxElementLength = el.length() + 1;
-						
-						if(el.length() > 0 && el.charAt(el.length()-1) == '"') // Removes last " char of the element
-							el = el.substring(0, el.length() - 1);	
-						
-						if(rowIdx == 0) //If first row, it the label value
-							labels.add(el.trim());
-						else            //Otherwise we add it to the HashMap
-							addElementAndCreateRowIfNecessary(columns, labels.get(columnIdx), el);
-						
-						columnIdx++;
-						el = "";
-					} else { // Element
+			
+			Scanner rowScanner = new Scanner(lineString);
+			rowScanner.useDelimiter("");
+			Boolean escape = false;
+			String el = "";
+			
+			while(rowScanner.hasNext()) {
+				String c = rowScanner.next();
+				if(c.charAt(0) == '"'){ // Escaping
+					if(escape) // Add the escaped " char to the element
 						el += c;
-					}
-				}	
-				
-				if(el.length() > this.maxElementLength)	// Used for pretty printing
-					this.maxElementLength = el.length() + 1;
-				
-				if(el.length() > 0 && el.charAt(el.length()-1) == '"') // Removes last " char of the element
-					el = el.substring(0, el.length() - 1);	
-				
-				if(rowIdx == 0) //If first row, it the label value
-					labels.add(el.trim());
-				else if(!el.equals(""))          //Otherwise we add it to the HashMap
-					addElementAndCreateRowIfNecessary(columns, labels.get(columnIdx), el);
-				
-				rowIdx++;
-				rowScanner.close();
-			}
-			fileScanner.close();
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
+					escape = !escape;
+				} else if(!escape && c.charAt(0) == ',') { // End of element
+					if(el.length() > this.maxElementLength)	// Used for pretty printing
+						this.maxElementLength = el.length() + 1;
+					
+					if(el.length() > 0 && el.charAt(el.length()-1) == '"') // Removes last " char of the element
+						el = el.substring(0, el.length() - 1);	
+					
+					if(rowIdx == 0) //If first row, it the label value
+						labels.add(el.trim());
+					else            //Otherwise we add it to the HashMap
+						addElementAndCreateRowIfNecessary(columns, labels.get(columnIdx), el);
+					
+					columnIdx++;
+					el = "";
+				} else { // Element
+					el += c;
+				}
+			}	
+			
+			if(el.length() > this.maxElementLength)	// Used for pretty printing
+				this.maxElementLength = el.length() + 1;
+			
+			if(el.length() > 0 && el.charAt(el.length()-1) == '"') // Removes last " char of the element
+				el = el.substring(0, el.length() - 1);	
+			
+			if(rowIdx == 0) //If first row, it the label value
+				labels.add(el.trim());
+			else if(!el.equals(""))          //Otherwise we add it to the HashMap
+				addElementAndCreateRowIfNecessary(columns, labels.get(columnIdx), el);
+			
+			rowIdx++;
+			rowScanner.close();
 		}
+		fileScanner.close();
 		this.data = columns;
 	}
 	

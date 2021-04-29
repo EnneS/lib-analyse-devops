@@ -26,8 +26,26 @@ public class DataframeTest {
 	@Test
 	public void testSize() {
 		assertEquals(87, d.getNbLines());
-		assertEquals(3, d.getNbColumns());
+		assertEquals(4, d.getNbColumns());
 	}	
+	
+	@Test
+	public void testWrondFilename()
+	{
+		try {
+			d = new Dataframe("src/test/resources/deniros.csv");
+			fail();
+		} catch(Exception e) {}
+	}
+	
+	@Test
+	public void testEmptyFile()
+	{
+		try {
+			d = new Dataframe("src/test/resources/emptyFile.csv");
+		} catch(Exception e) {}
+		assertEquals(0, d.getNbLines());
+	}
 	
 	@Test
 	public void testGetCell() {
@@ -146,5 +164,11 @@ public class DataframeTest {
 			e.printStackTrace();
 			fail(e.getMessage());
 		}
+	}
+	
+	@Test
+	public void testToStringNotNull()
+	{
+		assertNotEquals("", d.toString());
 	}
 }
