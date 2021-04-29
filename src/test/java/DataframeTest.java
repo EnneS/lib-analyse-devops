@@ -26,7 +26,7 @@ public class DataframeTest {
 	@Test
 	public void testSize() {
 		assertEquals(87, d.getNbLines());
-		assertEquals(4, d.getNbColumns());
+		assertEquals(5, d.getNbColumns());
 	}	
 	
 	@Test

@@ -1,88 +1,88 @@
-Year,Score,Prix,Title
-1968,86,0.5,Greetings
-1970,17,0.6,Bloody Mama
-1970,73,0.7,"Hi, Mom!"
-1971,40,0.8,Born to Win
-1973,98,0.9,Mean Streets
-1973,88,0.100000,Bang the Drum Slowly
-1974,97,0.11,"""The Godfather, Part II"""
-1976,41,0.12,The Last Tycoon
-1976,99,0.13,Taxi Driver
-1977,47,0.14,1900
-1977,67,0.15,"New York, New York"
-1978,93,0.16,The Deer Hunter
-1980,97,0.17,Raging Bull
-1981,75,0.18,True Confessions
-1983,90,0.19,The King of Comedy
-1984,89,0.20,Once Upon a Time in America
-1984,60,0.21,Falling in Love
-1985,98,0.22,Brazil
-1986,65,0.23,The Mission
-1987,100,0.22,Dear America
-1987,80,0.25,The Untouchables
-1987,78,0.26,Angel Heart
-1988,96,0.27,Midnight Run
-1989,64,0.28,Jacknife
-1989,47,0.29,We're No Angels
-1990,88,0.30,Awakenings
-1990,29,0.31,Stanley & Iris
-1990,96,0.32,Goodfellas
-1991,76,0.33,Cape Fear
-1991,69,0.34,Mistress
-1991,65,0.35,Guilty by Suspicion
-1991,71,0.36,Backdraft
-1992,87,0.37,Thunderheart
-1992,67,0.38,Night and the City
-1993,75,0.39,This Boy's Life
-1993,78,0.40,Mad Dog and Glory
-1993,96,0.41,A Bronx Tale
-1994,39,0.42,Mary Shelley's Frankenstein
-1995,80,0.43,Casino
-1995,86,0.44,Heat
-1996,74,0.45,Sleepers
-1996,38,0.46,The Fan
-1996,80,0.47,Marvin's Room
-1997,85,0.48,Wag the Dog
-1997,87,0.49,Jackie Brown
-1997,72,0.50,Cop Land
-1998,68,0.51,Ronin
-1998,38,0.52,Great Expectations
-1999,69,0.53,Analyze This
-1999,43,0.54,Flawless
-2000,43,0.55,The Adventures
-2000,84,0.56,Meet the Parents
-2000,41,0.57,Men of Honor
-2001,73,0.58,The Score
-2001,33,0.59,15 Minutes
-2002,48,0.60,City by the Sea
-2002,27,0.61,Analyze That
-2003,4,0.62,Godsend
-2004,35,0.63,Shark Tale
-2004,38,0.64,Meet the Fockers
-2005,4,0.65,The Bridge of San Luis Rey
-2005,46,0.66,Rent
-2005,13,0.67,Hide and Seek
-2006,54,0.68,6
-2007,21,0.69,Arthur and the Invisibles
-2007,76,0.70,Captain Shakespeare
-2008,19,0.71,Righteous Kill
-2008,51,0.72,What Just Happened?
-2009,46,0.73,Everybody's Fine
-2010,72,0.74,Machete
-2010,10,0.75,Little Fockers
-2010,50,0.76,Stone
-2011,25,0.77,Killer Elite
-2011,7,0.78,New Year's Eve
-2011,70,0.79,Limitless
-2012,92,0.80,Silver Linings Playbook
-2012,51,0.81,Being Flynn
-2012,29,0.82,Red Lights
-2013,46,0.83,Last Vegas
-2013,7,0.84,The Big Wedding
-2013,29,0.85,Grudge Match
-2013,11,0.86,Killing Season
-2014,9,0.87,The Bag Man
-2015,60,0.88,Joy
-2015,26,0.89,Heist
-2015,61,0.90,The Intern
-2016,11,0.91,"""Dirty Grandpa"""
+Year,Score,Prix,Title,Title2
+1968,86,0.5,Greetings,Greetings
+1970,17,0.6,Bloody Mama,Bloody Mama
+1970,73,0.7,"Hi, Mom!","Hi, Mom!"
+1971,40,0.8,Born to Win,Born to Win
+1973,98,0.9,Mean Streets,Mean Streets
+1973,88,0.100000,Bang the Drum Slowly,Bang the Drum Slowly
+1974,97,0.11,"""The Godfather, Part II""","""The Godfather, Part II"""
+1976,41,0.12,The Last Tycoon,The Last Tycoon
+1976,99,0.13,Taxi Driver,Taxi Driver
+1977,47,0.14,1900,1900
+1977,67,0.15,"New York, New York","New York, New York"
+1978,93,0.16,The Deer Hunter,The Deer Hunter
+1980,97,0.17,Raging Bull,Raging Bull
+1981,75,0.18,True Confessions,True Confessions
+1983,90,0.19,The King of Comedy,The King of Comedy
+1984,89,0.20,Once Upon a Time in America,Once Upon a Time in America
+1984,60,0.21,Falling in Love,Falling in Love
+1985,98,0.22,Brazil,Brazil
+1986,65,0.23,The Mission,The Mission
+1987,100,0.22,Dear America,Dear America
+1987,80,0.25,The Untouchables,The Untouchables
+1987,78,0.26,Angel Heart,Angel Heart
+1988,96,0.27,Midnight Run,Midnight Run
+1989,64,0.28,Jacknife,Jacknife
+1989,47,0.29,We're No Angels,We're No Angels
+1990,88,0.30,Awakenings,Awakenings
+1990,29,0.31,Stanley & Iris,Stanley & Iris
+1990,96,0.32,Goodfellas,Goodfellas
+1991,76,0.33,Cape Fear,Cape Fear
+1991,69,0.34,Mistress,Mistress
+1991,65,0.35,Guilty by Suspicion,Guilty by Suspicion
+1991,71,0.36,Backdraft,Backdraft
+1992,87,0.37,Thunderheart,Thunderheart
+1992,67,0.38,Night and the City,Night and the City
+1993,75,0.39,This Boy's Life,This Boy's Life
+1993,78,0.40,Mad Dog and Glory,Mad Dog and Glory
+1993,96,0.41,A Bronx Tale,A Bronx Tale
+1994,39,0.42,Mary Shelley's Frankenstein,Mary Shelley's Frankenstein
+1995,80,0.43,Casino,Casino
+1995,86,0.44,Heat,Heat
+1996,74,0.45,Sleepers,Sleepers
+1996,38,0.46,The Fan,The Fan
+1996,80,0.47,Marvin's Room,Marvin's Room
+1997,85,0.48,Wag the Dog,Wag the Dog
+1997,87,0.49,Jackie Brown,Jackie Brown
+1997,72,0.50,Cop Land,Cop Land
+1998,68,0.51,Ronin,Ronin
+1998,38,0.52,Great Expectations,Great Expectations
+1999,69,0.53,Analyze This,Analyze This
+1999,43,0.54,Flawless,Flawless
+2000,43,0.55,The Adventures,The Adventures
+2000,84,0.56,Meet the Parents,Meet the Parents
+2000,41,0.57,Men of Honor,Men of Honor
+2001,73,0.58,The Score,The Score
+2001,33,0.59,15 Minutes,15 Minutes
+2002,48,0.60,City by the Sea,City by the Sea
+2002,27,0.61,Analyze That,Analyze That
+2003,4,0.62,Godsend,Godsend
+2004,35,0.63,Shark Tale,Shark Tale
+2004,38,0.64,Meet the Fockers,Meet the Fockers
+2005,4,0.65,The Bridge of San Luis Rey,The Bridge of San Luis Rey
+2005,46,0.66,Rent,Rent
+2005,13,0.67,Hide and Seek,Hide and Seek
+2006,54,0.68,6,6
+2007,21,0.69,Arthur and the Invisibles,Arthur and the Invisibles
+2007,76,0.70,Captain Shakespeare,Captain Shakespeare
+2008,19,0.71,Righteous Kill,Righteous Kill
+2008,51,0.72,What Just Happened?,What Just Happened?
+2009,46,0.73,Everybody's Fine,Everybody's Fine
+2010,72,0.74,Machete,Machete
+2010,10,0.75,Little Fockers,Little Fockers
+2010,50,0.76,Stone,Stone
+2011,25,0.77,Killer Elite,Killer Elite
+2011,7,0.78,New Year's Eve,New Year's Eve
+2011,70,0.79,Limitless,Limitless
+2012,92,0.80,Silver Linings Playbook,Silver Linings Playbook
+2012,51,0.81,Being Flynn,Being Flynn
+2012,29,0.82,Red Lights,Red Lights
+2013,46,0.83,Last Vegas,Last Vegas
+2013,7,0.84,The Big Wedding,The Big Wedding
+2013,29,0.85,Grudge Match,Grudge Match
+2013,11,0.86,Killing Season,Killing Season
+2014,9,0.87,The Bag Man,The Bag Man
+2015,60,0.88,Joy,Joy
+2015,26,0.89,Heist,Heist
+2015,61,0.90,The Intern,The Intern
+2016,11,0.91,"""Dirty Grandpa""","""Dirty Grandpa"""
