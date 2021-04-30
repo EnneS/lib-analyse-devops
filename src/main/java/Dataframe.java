@@ -411,7 +411,7 @@ public class Dataframe {
 	
 	/**
 	 * Returns a subset of the dataframe
-	 * @param the labels to put in the subset
+	 * @param labels the labels to put in the subset
 	 * @return the subset
 	 * @throws Exception Throws an exception if the subset interval isn't valid (i must be greater than j and 0)
 	 */
