@@ -264,7 +264,7 @@ public class Dataframe {
 	 * Returns whether a column is computable or not
 	 * @param label The label of the column
 	 * @return True if the column is a computable, false otherwise
-	 * @throws Throws an exception if column does not exist
+	 * @throws Exception Throws an exception if column does not exist
 	 */
 	public boolean isColumnComputable(String label) throws Exception
 	{
@@ -297,7 +297,7 @@ public class Dataframe {
 	 * @param label The label of the column
 	 * @param j The value of the line
 	 * @return The value of the cell
-	 * @throws Throws an exception if the cell cannot be found (out of bounds or unknown label)
+	 * @throws Exception Throws an exception if the cell cannot be found (out of bounds or unknown label)
 	 */
 	public Object getCell(String label, int j) throws Exception
 	{
@@ -382,7 +382,7 @@ public class Dataframe {
 	 * @param i the line index to start from
 	 * @param j the line index to stop at, if j is greater than the last line index, j is equal to the last index
 	 * @return the subset
-	 * @throws Throws an exception if the subset interval isn't valid (i must be greater than j and 0)
+	 * @throws Exception Throws an exception if the subset interval isn't valid (i must be greater than j and 0)
 	 */
 	public Dataframe subset(int i, int j) throws Exception
 	{
