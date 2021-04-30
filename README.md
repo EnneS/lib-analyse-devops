@@ -20,6 +20,7 @@ Retrouvez la documentation de notre librairie à cette adresse :
  
 **Sélection dans un dataframe**
 - Sélection d'un sous-ensemble de lignes à partir de leur index
+- Sélection d'un sous-ensemble de colonnes à partir de leur labels
 
 **Statistiques sur un dataframe**
 - Moyenne d'une colonne
