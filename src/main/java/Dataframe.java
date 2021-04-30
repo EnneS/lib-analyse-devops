@@ -32,7 +32,6 @@ public class Dataframe {
 	 */
 	public Dataframe(String csv)  throws FileNotFoundException
 	{
-//		System.out.println("Debut de dataframe");
 		HashMap<String, ArrayList> columns = new HashMap<String, ArrayList>();
 		
 		Scanner fileScanner = new Scanner(new File(csv));
@@ -46,7 +45,6 @@ public class Dataframe {
 		while(fileScanner.hasNextLine()) {
 			int columnIdx = 0;
 			String lineString = fileScanner.nextLine();
-//				System.out.println(lineString);
 			
 			Scanner rowScanner = new Scanner(lineString);
 			rowScanner.useDelimiter("");
@@ -111,7 +109,6 @@ public class Dataframe {
 		el = el.trim();
 		//Test if the column already exist
 		if(columns.containsKey(label)) {
-//			System.out.println("Ajout au label " + label + " l'élément " + el);
 			try {
 				int elToAdd = Integer.parseInt(el); //If is Integer
 				foundType = true;
