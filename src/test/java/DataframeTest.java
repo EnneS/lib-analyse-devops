@@ -244,6 +244,37 @@ public class DataframeTest {
 	}
 	
 	@Test
+	public void testSubsetInvalideLabel()
+	{
+		try {
+			d.subset("Titles");
+			fail();
+		}catch(Exception e) {}	
+	}
+	
+	@Test
+	public void testSubsetSameNumberOfColumn()
+	{
+		try {
+			Dataframe newDataframe = d.subset("Title", "Prix");
+			assertEquals(2, newDataframe.getNbColumns());
+		}catch(Exception e) {
+			fail(e.getMessage());
+		}	
+	}
+	
+	@Test
+	public void testSubsetSameNumberOfLines()
+	{
+		try {
+			Dataframe newDataframe = d.subset("Title", "Prix");
+			assertEquals(d.getNbLines(), newDataframe.getNbLines());
+		}catch(Exception e) {
+			fail(e.getMessage());
+		}	
+	}
+	
+	@Test
 	public void testAverageInteger()
 	{
 		try {
