@@ -28,12 +28,13 @@ jobs:
           echo "Running tests"
           mvn test
           
-      # Publishing the tests report
+      # Publish the tests report
       - name: Publish Test Report
         uses: scacap/action-surefire-report@v1
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
 
+      # Upload the coverage to codecov
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v1
         with:
@@ -43,8 +44,16 @@ jobs:
           name: codecov-umbrella
           fail_ci_if_error: true
           path_to_write_report: ./coverage/codecov_report.txt
-          verbose: true  
-
-
+          verbose: true
+          
+      # Build the docs with maven
+      - name: Build docs with Maven
+        run: mvn javadoc:javadoc
+        
+      # Move the docs to the github pages folder location
+      - name: Copy to Documentation Website Location
+        run: |
+        rm -rf docs
+        cp -rf target/site/apidocs/. docs
 
     
