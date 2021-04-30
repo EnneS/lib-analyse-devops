@@ -110,8 +110,8 @@ public class DataframeTest {
 		HashMap<String, ArrayList> wrongDataframe = new HashMap<String, ArrayList>();
 		
 		ArrayList name = new ArrayList();
-		name.add("sdfsd");
 		name.add(3.7);		
+		name.add("sdfsd");
 		name.add(5);		
 		
 		wrongDataframe.put("nom", name);
@@ -169,7 +169,231 @@ public class DataframeTest {
 	@Test
 	public void testToStringNotNull()
 	{
-		System.out.println(d);
 		assertNotEquals("", d.toString());
+	}
+	
+	@Test
+	public void testToStringFirstLine()
+	{
+		assertNotEquals("", d.nFirstLineToString(200));
+	}
+	
+	@Test
+	public void testToStringLastLineLessThan0()
+	{
+		assertNotEquals("", d.nLastLineToString(-54));
+	}
+	
+	@Test
+	public void testToStringLastLine()
+	{
+		assertNotEquals("", d.nLastLineToString(200));
+	}
+	
+	@Test
+	public void testSubsetDataframe()
+	{
+		try {
+			Dataframe m = d.subset(0, 15);
+			assertEquals(m.toString(), d.nFirstLineToString(15));
+		} catch(Exception e) {
+			fail(e.getMessage());
+		}
+		
+	}
+	
+	@Test
+	public void testSubsetDataframeLessThanZeroStart()
+	{
+		try {
+			Dataframe m = d.subset(-1, 15);
+			fail();
+		} catch(Exception e) {}
+		
+	}
+	
+	@Test
+	public void testSubsetDataframeGreaterThanNbLineStart()
+	{
+		try {
+			Dataframe m = d.subset(180, 15);
+			fail();
+		} catch(Exception e) {}
+		
+	}
+	
+	@Test
+	public void testSubsetDataframeGreaterThanEndStart()
+	{
+		try {
+			Dataframe m = d.subset(24, 15);
+			fail();
+		} catch(Exception e) {}
+		
+	}
+	
+	@Test
+	public void testSubsetDataframeGreaterThanNbLineEnd()
+	{
+		try {
+			Dataframe m = d.subset(0, 200);
+			assertEquals(m.toString(), d.toString());
+		} catch(Exception e) {
+			fail(e.getMessage());
+		}		
+	}
+	
+	@Test
+	public void testAverageInteger()
+	{
+		try {
+			assertEquals(58.1954023,d.getAverage("Score"), 0.01);
+		}catch(Exception e) {
+			fail(e.getMessage());
+		}	
+	}
+	
+	@Test
+	public void testAverageFloat()
+	{
+		try {
+			assertEquals(0.52,d.getAverage("Prix"), 0.01);
+		}catch(Exception e) {
+			fail(e.getMessage());
+		}	
+	}
+	
+	@Test
+	public void testAverageWrongLabel()
+	{
+		try {
+			d.getAverage("Prixs");
+			fail();
+		}catch(Exception e) {}	
+	}
+	
+	@Test
+	public void testAverageNotCalculableRow()
+	{
+		try {
+			d.getAverage("Title");
+			fail();
+		}catch(Exception e) {}	
+	}
+	
+	@Test
+	public void testAverageEmptyData()
+	{
+		try {
+			d = new Dataframe("src/test/resources/noData.csv");
+			assertEquals(0,d.getAverage("Prix"),0);
+		}catch(Exception e) {
+			fail(e.getMessage());
+		}	
+	}
+	
+	@Test
+	public void testMinFloat()
+	{
+		try {
+			assertEquals(0.1,d.getMin("Prix"),0.00001);
+		}catch(Exception e) {
+			fail(e.getMessage());
+		}	
+	}
+	
+	@Test
+	public void testMinInt()
+	{
+		try {
+			assertEquals(4,d.getMin("Score"),0.000001);
+		}catch(Exception e) {
+			fail(e.getMessage());
+		}	
+	}
+	
+	@Test
+	public void testMinLabelDoesntExist()
+	{
+		try {
+			d.getMin("Scores");
+			fail();
+		}catch(Exception e) {}	
+	}
+	
+	@Test
+	public void testMinLabelNotCalculable()
+	{
+		try {
+			d.getMin("Title");
+			fail();
+		}catch(Exception e) {}	
+	}
+	
+	@Test
+	public void testMinEmptyData()
+	{
+		try {
+			d = new Dataframe("src/test/resources/noData.csv");
+			d.getMin("Score");
+			fail();
+		}catch(Exception e) {}	
+	}
+	
+	@Test
+	public void testMaxFloat()
+	{
+		try {
+			assertEquals(0.91,d.getMax("Prix"),0.00001);
+		}catch(Exception e) {
+			fail(e.getMessage());
+		}	
+	}
+	
+	@Test
+	public void testMaxInt()
+	{
+		try {
+			assertEquals(100,d.getMax("Score"),0.000001);
+		}catch(Exception e) {
+			fail(e.getMessage());
+		}	
+	}
+	
+	@Test
+	public void testMaxLabelDoesntExist()
+	{
+		try {
+			d.getMax("Scores");
+			fail();
+		}catch(Exception e) {}	
+	}
+	
+	@Test
+	public void testMaxLabelNotCalculable()
+	{
+		try {
+			d.getMax("Title");
+			fail();
+		}catch(Exception e) {}	
+	}
+	
+	@Test
+	public void testMaxEmptyData()
+	{
+		try {
+			d = new Dataframe("src/test/resources/noData.csv");
+			d.getMax("Score");
+			fail();
+		}catch(Exception e) {}	
+	}
+	
+	@Test
+	public void testIsCalculableColumn()
+	{
+		try {
+			d.isCalculableColumn("Titles");
+			fail();
+		}catch(Exception e) {}	
 	}
 }
