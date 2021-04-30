@@ -1,0 +1,27 @@
+name: Deploy to Github Pages
+on:
+  push:
+    branches:
+      - main
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout 🛎️
+        uses: actions/checkout@v2.3.1
+          
+      # Build the docs with maven
+      - name: Build docs with Maven
+        run: mvn javadoc:javadoc
+        
+      # Move the docs to the github pages folder location
+      - name: Copy to Documentation Website Location
+        run: |
+          rm -rf docs
+          cp -rf target/site/apidocs/. docs
+          
+      - name: Deploy to github pages
+        uses: JamesIves/github-pages-deploy-action@4.1.1
+        with:
+          branch: gh-pages # The branch the action should deploy to.
+          folder: docs # The folder the action should deploy.
