@@ -1,4 +1,5 @@
-![GitHub Workflow Status](https://img.shields.io/github/workflow/status/ennes/lib-analyse-devops/CI) [![codecov](https://codecov.io/gh/EnneS/lib-analyse-devops/branch/master/graph/badge.svg?token=789XG0IDJT)](https://codecov.io/gh/EnneS/lib-analyse-devops) ![GitHub release (latest by date including pre-releases)](https://img.shields.io/github/v/release/ennes/lib-analyse-devops?include_prereleases)
+![GitHub Workflow Status](https://img.shields.io/github/workflow/status/ennes/lib-analyse-devops/CI) [![codecov](https://codecov.io/gh/EnneS/lib-analyse-devops/branch/master/graph/badge.svg?token=789XG0IDJT)](https://codecov.io/gh/EnneS/lib-analyse-devops) [![GitHub release (latest by date including pre-releases)](https://img.shields.io/github/v/release/ennes/lib-analyse-devops?include_prereleases)
+](https://github.com/EnneS/lib-analyse-devops/releases/tag/1.0)
 
 <h1>Librairie d'analyse de Dataframe</h1>
 
