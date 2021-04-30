@@ -3,7 +3,9 @@
 <h1>Librairie d'analyse de Dataframe</h1>
 
 <h2>Documentation</h2>
-Retrouvez la documentation de notre librairie à cette adresse : [Documentation](https://ennes.github.io/lib-analyse-devops)
+Retrouvez la documentation de notre librairie à cette adresse : 
+
+![Documentation](https://ennes.github.io/lib-analyse-devops)
 
 <h2>Fonctionnalitées:</h2>
 
