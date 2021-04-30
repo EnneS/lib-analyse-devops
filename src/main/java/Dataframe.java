@@ -7,7 +7,7 @@ import java.util.HashMap;
 
 public class Dataframe {
 	/**
-	 * The data oof the class
+	 * The data of the class
 	 */
 	private HashMap<String, ArrayList> data;
 	
@@ -18,17 +18,17 @@ public class Dataframe {
 	
 	/**
 	 * Create DataFrame from data structure
-	 * @param data
-	 * @throws Exception
+	 * @param data Dataframe data
+	 * @throws Exception Throws an exception if the given data is not valid
 	 */
 	public Dataframe(HashMap<String, ArrayList> data) throws Exception {
 		setData(data);
 	}
 	
 	/**
-	 * Create DataFrame from cvs file
-	 * @param csv the file path
-	 * @throws FileNotFoundException
+	 * Create DataFrame from csv file
+	 * @param csv The file path to the csv file
+	 * @throws FileNotFoundException Throws an exception if the given file is not found
 	 */
 	public Dataframe(String csv)  throws FileNotFoundException
 	{
@@ -100,9 +100,9 @@ public class Dataframe {
 	}
 	
 	/**
-	 * Method for constructor
+	 * Private method for constructor
 	 */
-	public void addElementAndCreateRowIfNecessary(HashMap<String, ArrayList> columns, String label, String el)
+	private void addElementAndCreateRowIfNecessary(HashMap<String, ArrayList> columns, String label, String el)
 	{
 		boolean foundType = false;
 		//Remove unnecessary space
@@ -156,10 +156,10 @@ public class Dataframe {
 	 */
 	
 	/**
-	 * Return the average of a column if if is a calculable colomn
-	 * @param label
-	 * @return
-	 * @throws Exception
+	 * Return the average of a column if it is a computable column
+	 * @param label Label of the column
+	 * @return The average of that column
+	 * @throws Exception Throws an exception if the average cannot be computed
 	 */
 	public float getAverage(String label) throws Exception
 	{
@@ -171,8 +171,8 @@ public class Dataframe {
 		if(this.getData().get(label).size() == 0)
 			return 0;
 		
-		if(!this.isCalculableColumn(label))
-			throw new Exception("The label " + label +  " does not containt value that can be calculated");
+		if(!this.isColumnComputable(label))
+			throw new Exception("The label " + label +  " does not contain value that can be calculated");
 		
 		for(int i = 0; i < this.getData().get(label).size(); i++) {
 			if(this.getData().get(label).get(i).getClass().getName().equals("java.lang.Float"))
@@ -186,9 +186,9 @@ public class Dataframe {
 	
 	/**
 	 * Return the min of a column
-	 * @param label of the column
-	 * @return min
-	 * @throws Exception
+	 * @param label Label of the column
+	 * @return The minimum of that column
+	 * @throws Exception Throws an exception if the minimum cannot be computed
 	 */
 	public float getMin(String label) throws Exception
 	{
@@ -198,7 +198,7 @@ public class Dataframe {
 		if(this.getData().get(label).size() == 0)
 			throw new Exception("The label " + label +  " does not containt value that can be calculated");
 		
-		if(!this.isCalculableColumn(label))
+		if(!this.isColumnComputable(label))
 			throw new Exception("The label " + label +  " does not containt value that can be calculated");
 
 		float min;
@@ -223,10 +223,10 @@ public class Dataframe {
 	}
 	
 	/**
-	 * Return the min of a column
-	 * @param label of the column
-	 * @return min
-	 * @throws Exception
+	 * Return the max of a column
+	 * @param label Label of the column
+	 * @return The maximum of that column
+	 * @throws Exception Throws an exception if the maximum cannot be computed
 	 */
 	public float getMax(String label) throws Exception
 	{
@@ -236,7 +236,7 @@ public class Dataframe {
 		if(this.getData().get(label).size() == 0)
 			throw new Exception("The label " + label +  " does not containt value that can be calculated");
 		
-		if(!this.isCalculableColumn(label))
+		if(!this.isColumnComputable(label))
 			throw new Exception("The label " + label +  " does not containt value that can be calculated");
 
 		float max;
@@ -260,8 +260,13 @@ public class Dataframe {
 		return max;		
 	}
 	
-	
-	public boolean isCalculableColumn(String label) throws Exception
+	/**
+	 * Returns whether a column is computable or not
+	 * @param label The label of the column
+	 * @return True if the column is a computable, false otherwise
+	 * @throws Exception Throws an exception if column does not exist
+	 */
+	public boolean isColumnComputable(String label) throws Exception
 	{
 		if(!this.getData().containsKey(label))
 			throw new Exception("The label " + label +  " does not exist in the data");
@@ -269,13 +274,9 @@ public class Dataframe {
 		String[] numericTypes = {
 				"java.lang.Float",
 				"java.lang.Integer"
-			};
+		};
 			
-		if(!Arrays.asList(numericTypes).contains(this.getData().get(label).get(0).getClass().getName()))
-			return false;
-		else
-			return true;	
-		
+		return Arrays.asList(numericTypes).contains(this.getData().get(label).get(0).getClass().getName());
 	}
 	
 	
@@ -285,18 +286,18 @@ public class Dataframe {
 	 */
 	
 	/**
-	 * @return the data
+	 * @return the dataframe data
 	 */
 	private HashMap<String, ArrayList> getData() {
 		return data;
 	}
 	
 	/**
-	 * Return the value of one cell
-	 * @param label the label of the column for the hashmap
-	 * @param j the value of the line
-	 * @return the value of the cell
-	 * @throws Exception
+	 * Returns the value of one cell
+	 * @param label The label of the column
+	 * @param j The value of the line
+	 * @return The value of the cell
+	 * @throws Exception Throws an exception if the cell cannot be found (out of bounds or unknown label)
 	 */
 	public Object getCell(String label, int j) throws Exception
 	{
@@ -308,7 +309,7 @@ public class Dataframe {
 	}
 	
 	/**
-	 * @return the number of line
+	 * @return The number of lines in a dataframe
 	 */
 	public int getNbLines() {
 		if(this.data.size() == 0)
@@ -320,7 +321,7 @@ public class Dataframe {
 	}
 	
 	/**
-	 * @return the number of column
+	 * @return The number of columns in a dataframe
 	 */
 	public int getNbColumns() {
 		return this.getData().size();
@@ -334,7 +335,10 @@ public class Dataframe {
 		this.data = data;
 	}
 	
-	public int getMaxElementLength() {
+	/**
+	 * @return The maximum length observed among all elements of the dataframe (used for pretty printing)
+	 */
+	private int getMaxElementLength() {
 		return maxElementLength;
 	}
 
@@ -348,8 +352,9 @@ public class Dataframe {
 	 */
 
 	/**
-	 * @param dataframe
-	 * @return if the dataframe isValide
+	 * Indicates whether some given data from a dataframe is valid or not
+	 * @param dataframe Dataframe data
+	 * @return If the data is valid
 	 */
 	public static boolean isValidDataframe(HashMap<String, ArrayList>  dataframe)
 	{
@@ -373,11 +378,11 @@ public class Dataframe {
 	}
 	
 	/**
-	 * Return a subset of the dataframe
-	 * @param i the line to start
-	 * @param j the line to stop, if j > nbLine return until the end
+	 * Returns a subset of the dataframe
+	 * @param i the line index to start from
+	 * @param j the line index to stop at, if j is greater than the last line index, j is equal to the last index
 	 * @return the subset
-	 * @throws Exception 
+	 * @throws Exception Throws an exception if the subset interval isn't valid (i must be greater than j and 0)
 	 */
 	public Dataframe subset(int i, int j) throws Exception
 	{
@@ -465,7 +470,7 @@ public class Dataframe {
 	
 	/**
 	 * Return the n first lines in string format
-	 * @param n the number of line to print
+	 * @param n the number of lines to print
 	 * @return the string
 	 */
 	public String nFirstLineToString(int n)
@@ -488,7 +493,7 @@ public class Dataframe {
 
 	/**
 	 * Return the n last lines in string format
-	 * @param n the number of line to print
+	 * @param n the number of lines to print
 	 * @return the string
 	 */
 	public String nLastLineToString(int n)
