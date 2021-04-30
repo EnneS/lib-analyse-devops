@@ -53,7 +53,7 @@ jobs:
       # Move the docs to the github pages folder location
       - name: Copy to Documentation Website Location
         run: |
-        rm -rf docs
-        cp -rf target/site/apidocs/. docs
+          rm -rf docs
+          cp -rf target/site/apidocs/. docs
 
     
