@@ -171,8 +171,8 @@ public class Dataframe {
 		if(this.getData().get(label).size() == 0)
 			return 0;
 		
-		if(!this.isCalculableColumn(label))
-			throw new Exception("The label " + label +  " does not containt value that can be calculated");
+		if(!this.isColumnComputable(label))
+			throw new Exception("The label " + label +  " does not contain value that can be calculated");
 		
 		for(int i = 0; i < this.getData().get(label).size(); i++) {
 			if(this.getData().get(label).get(i).getClass().getName().equals("java.lang.Float"))
@@ -198,7 +198,7 @@ public class Dataframe {
 		if(this.getData().get(label).size() == 0)
 			throw new Exception("The label " + label +  " does not containt value that can be calculated");
 		
-		if(!this.isCalculableColumn(label))
+		if(!this.isColumnComputable(label))
 			throw new Exception("The label " + label +  " does not containt value that can be calculated");
 
 		float min;
@@ -236,7 +236,7 @@ public class Dataframe {
 		if(this.getData().get(label).size() == 0)
 			throw new Exception("The label " + label +  " does not containt value that can be calculated");
 		
-		if(!this.isCalculableColumn(label))
+		if(!this.isColumnComputable(label))
 			throw new Exception("The label " + label +  " does not containt value that can be calculated");
 
 		float max;
@@ -260,8 +260,13 @@ public class Dataframe {
 		return max;		
 	}
 	
-	
-	private boolean isCalculableColumn(String label) throws Exception
+	/**
+	 * Returns whether a column is computable or not
+	 * @param label The label of the column
+	 * @return True if the column is a computable, false otherwise
+	 * @throws Throws an exception if column does not exist
+	 */
+	public boolean isColumnComputable(String label) throws Exception
 	{
 		if(!this.getData().containsKey(label))
 			throw new Exception("The label " + label +  " does not exist in the data");
@@ -269,13 +274,9 @@ public class Dataframe {
 		String[] numericTypes = {
 				"java.lang.Float",
 				"java.lang.Integer"
-			};
+		};
 			
-		if(!Arrays.asList(numericTypes).contains(this.getData().get(label).get(0).getClass().getName()))
-			return false;
-		else
-			return true;	
-		
+		return Arrays.asList(numericTypes).contains(this.getData().get(label).get(0).getClass().getName());
 	}
 	
 	

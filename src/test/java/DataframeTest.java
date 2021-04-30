@@ -389,10 +389,10 @@ public class DataframeTest {
 	}
 	
 	@Test
-	public void testIsCalculableColumn()
+	public void testIsColumnComputable()
 	{
 		try {
-			d.isCalculableColumn("Titles");
+			d.isColumnComputable("Titles");
 			fail();
 		}catch(Exception e) {}	
 	}
