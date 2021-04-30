@@ -156,10 +156,14 @@ public class Dataframe {
 	
 	/**
 	 * Stats Methods
-	 * @throws Exception 
-	 * 
 	 */
 	
+	/**
+	 * Return the average of a column if if is a calculable colomn
+	 * @param label
+	 * @return
+	 * @throws Exception
+	 */
 	public float getAverage(String label) throws Exception
 	{
 		if(!this.getData().containsKey(label))
@@ -170,15 +174,8 @@ public class Dataframe {
 		if(this.getData().get(label).size() == 0)
 			return 0;
 		
-		String[] numericTypes = {
-			"java.lang.Float",
-			"java.lang.Integer"
-		};
-		
-		if(!Arrays.asList(numericTypes).contains(this.getData().get(label).get(0).getClass().getName())) {
-			System.out.println(this.getData().get(label).get(0).getClass().getName());
+		if(!this.isCalculableColumn(label))
 			throw new Exception("The label " + label +  " does not containt value that can be calculated");
-		}
 		
 		for(int i = 0; i < this.getData().get(label).size(); i++) {
 			if(this.getData().get(label).get(i).getClass().getName().equals("java.lang.Float"))
@@ -188,6 +185,100 @@ public class Dataframe {
 		}
 		
 		return average/this.getData().get(label).size();
+	}
+	
+	/**
+	 * Return the min of a column
+	 * @param label of the column
+	 * @return min
+	 * @throws Exception
+	 */
+	public float getMin(String label) throws Exception
+	{
+		if(!this.getData().containsKey(label))
+			throw new Exception("The label " + label +  " does not exist in the data");
+		
+		if(this.getData().get(label).size() == 0)
+			throw new Exception("The label " + label +  " does not containt value that can be calculated");
+		
+		if(!this.isCalculableColumn(label))
+			throw new Exception("The label " + label +  " does not containt value that can be calculated");
+
+		float min;
+		if(this.getData().get(label).get(0).getClass().getName().equals("java.lang.Float"))
+			min = (Float) this.getData().get(label).get(0);
+		else
+			min = (Integer) this.getData().get(label).get(0);
+		
+		for(int i = 1; i < this.getData().get(label).size(); i++) {
+			if(this.getData().get(label).get(i).getClass().getName().equals("java.lang.Float")) {
+				float currentFloat = (Float) this.getData().get(label).get(i);
+				if(currentFloat < min)
+					min = currentFloat;
+			} else {
+				Integer currentInt = (Integer) this.getData().get(label).get(i);
+				if(currentInt < min)
+					min = currentInt.floatValue();
+			}
+			
+		}	
+		return min;		
+	}
+	
+	/**
+	 * Return the min of a column
+	 * @param label of the column
+	 * @return min
+	 * @throws Exception
+	 */
+	public float getMax(String label) throws Exception
+	{
+		if(!this.getData().containsKey(label))
+			throw new Exception("The label " + label +  " does not exist in the data");
+		
+		if(this.getData().get(label).size() == 0)
+			throw new Exception("The label " + label +  " does not containt value that can be calculated");
+		
+		if(!this.isCalculableColumn(label))
+			throw new Exception("The label " + label +  " does not containt value that can be calculated");
+
+		float max;
+		if(this.getData().get(label).get(0).getClass().getName().equals("java.lang.Float"))
+			max = (Float) this.getData().get(label).get(0);
+		else
+			max = (Integer) this.getData().get(label).get(0);
+		
+		for(int i = 1; i < this.getData().get(label).size(); i++) {
+			if(this.getData().get(label).get(i).getClass().getName().equals("java.lang.Float")) {
+				float currentFloat = (Float) this.getData().get(label).get(i);
+				if(currentFloat > max)
+					max = currentFloat;
+			} else {
+				Integer currentInt = (Integer) this.getData().get(label).get(i);
+				if(currentInt > max)
+					max = currentInt.floatValue();
+			}
+			
+		}	
+		return max;		
+	}
+	
+	
+	public boolean isCalculableColumn(String label) throws Exception
+	{
+		if(!this.getData().containsKey(label))
+			throw new Exception("The label " + label +  " does not exist in the data");
+		
+		String[] numericTypes = {
+				"java.lang.Float",
+				"java.lang.Integer"
+			};
+			
+		if(!Arrays.asList(numericTypes).contains(this.getData().get(label).get(0).getClass().getName()))
+			return false;
+		else
+			return true;	
+		
 	}
 	
 	

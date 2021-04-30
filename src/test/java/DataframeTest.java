@@ -291,4 +291,109 @@ public class DataframeTest {
 			fail(e.getMessage());
 		}	
 	}
+	
+	@Test
+	public void testMinFloat()
+	{
+		try {
+			assertEquals(0.1,d.getMin("Prix"),0.00001);
+		}catch(Exception e) {
+			fail(e.getMessage());
+		}	
+	}
+	
+	@Test
+	public void testMinInt()
+	{
+		try {
+			assertEquals(4,d.getMin("Score"),0.000001);
+		}catch(Exception e) {
+			fail(e.getMessage());
+		}	
+	}
+	
+	@Test
+	public void testMinLabelDoesntExist()
+	{
+		try {
+			d.getMin("Scores");
+			fail();
+		}catch(Exception e) {}	
+	}
+	
+	@Test
+	public void testMinLabelNotCalculable()
+	{
+		try {
+			d.getMin("Title");
+			fail();
+		}catch(Exception e) {}	
+	}
+	
+	@Test
+	public void testMinEmptyData()
+	{
+		try {
+			d = new Dataframe("src/test/resources/noData.csv");
+			d.getMin("Score");
+			fail();
+		}catch(Exception e) {}	
+	}
+	
+	@Test
+	public void testMaxFloat()
+	{
+		try {
+			assertEquals(0.91,d.getMax("Prix"),0.00001);
+		}catch(Exception e) {
+			fail(e.getMessage());
+		}	
+	}
+	
+	@Test
+	public void testMaxInt()
+	{
+		try {
+			assertEquals(100,d.getMax("Score"),0.000001);
+		}catch(Exception e) {
+			fail(e.getMessage());
+		}	
+	}
+	
+	@Test
+	public void testMaxLabelDoesntExist()
+	{
+		try {
+			d.getMax("Scores");
+			fail();
+		}catch(Exception e) {}	
+	}
+	
+	@Test
+	public void testMaxLabelNotCalculable()
+	{
+		try {
+			d.getMax("Title");
+			fail();
+		}catch(Exception e) {}	
+	}
+	
+	@Test
+	public void testMaxEmptyData()
+	{
+		try {
+			d = new Dataframe("src/test/resources/noData.csv");
+			d.getMax("Score");
+			fail();
+		}catch(Exception e) {}	
+	}
+	
+	@Test
+	public void testIsCalculableColumn()
+	{
+		try {
+			d.isCalculableColumn("Titles");
+			fail();
+		}catch(Exception e) {}	
+	}
 }
