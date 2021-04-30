@@ -1,18 +1,35 @@
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Scanner;
 import java.util.HashMap;
 
 public class Dataframe {
+	/**
+	 * The data oof the class
+	 */
 	private HashMap<String, ArrayList> data;
+	
+	/**
+	 * The max length of of all the value
+	 */
 	private int maxElementLength = 0;
 	
-
+	/**
+	 * Create DataFrame from data structure
+	 * @param data
+	 * @throws Exception
+	 */
 	public Dataframe(HashMap<String, ArrayList> data) throws Exception {
 		setData(data);
 	}
 	
+	/**
+	 * Create DataFrame from cvs file
+	 * @param csv the file path
+	 * @throws FileNotFoundException
+	 */
 	public Dataframe(String csv)  throws FileNotFoundException
 	{
 //		System.out.println("Debut de dataframe");
@@ -69,17 +86,24 @@ public class Dataframe {
 			
 			if(rowIdx == 0) //If first row, it the label value
 				labels.add(el.trim());
-			else if(!el.equals(""))          //Otherwise we add it to the HashMap
+			else          //Otherwise we add it to the HashMap
 				addElementAndCreateRowIfNecessary(columns, labels.get(columnIdx), el);
 			
 			rowIdx++;
 			rowScanner.close();
 		}
 		fileScanner.close();
+		if(rowIdx == 1) {
+			for(String s: labels) {
+				columns.put(s, new ArrayList());
+			}
+		}
 		this.data = columns;
 	}
 	
-	//Method for constructor
+	/**
+	 * Method for constructor
+	 */
 	public void addElementAndCreateRowIfNecessary(HashMap<String, ArrayList> columns, String label, String el)
 	{
 		boolean foundType = false;
@@ -105,8 +129,6 @@ public class Dataframe {
 			if(!foundType)						  //Otherwise we add it like that
 				columns.get(label).add(el);
 		} else {	
-//			System.out.println("Création du label " + label);
-//			System.out.println("Ajout au label " + el);
 			
 			try {
 				int elToAdd = Integer.parseInt(el); //If is Integer
@@ -132,16 +154,62 @@ public class Dataframe {
 		}
 	}
 	
+	/**
+	 * Stats Methods
+	 * @throws Exception 
+	 * 
+	 */
+	
+	public float getAverage(String label) throws Exception
+	{
+		if(!this.getData().containsKey(label))
+			throw new Exception("The label " + label +  " does not exist in the data");
+		
+		float average = 0;
+		
+		if(this.getData().get(label).size() == 0)
+			return 0;
+		
+		String[] numericTypes = {
+			"java.lang.Float",
+			"java.lang.Integer"
+		};
+		
+		if(!Arrays.asList(numericTypes).contains(this.getData().get(label).get(0).getClass().getName())) {
+			System.out.println(this.getData().get(label).get(0).getClass().getName());
+			throw new Exception("The label " + label +  " does not containt value that can be calculated");
+		}
+		
+		for(int i = 0; i < this.getData().get(label).size(); i++) {
+			if(this.getData().get(label).get(i).getClass().getName().equals("java.lang.Float"))
+				average += (Float) this.getData().get(label).get(i);
+			else
+				average += ((Integer) this.getData().get(label).get(i)).floatValue();
+		}
+		
+		return average/this.getData().get(label).size();
+	}
+	
 	
 	/**
 	 * Getters, Setters
+	 * 
 	 */
 	
-	//Getters
+	/**
+	 * @return the data
+	 */
 	private HashMap<String, ArrayList> getData() {
 		return data;
 	}
 	
+	/**
+	 * Return the value of one cell
+	 * @param label the label of the column for the hashmap
+	 * @param j the value of the line
+	 * @return the value of the cell
+	 * @throws Exception
+	 */
 	public Object getCell(String label, int j) throws Exception
 	{
 		if(this.getData().containsKey(label) && this.getData().get(label).size() > j && j > 0)
@@ -151,25 +219,25 @@ public class Dataframe {
 		
 	}
 	
+	/**
+	 * @return the number of line
+	 */
 	public int getNbLines() {
 		if(this.data.size() == 0)
 			return 0;
 		else {
 			Object[] keys =  this.getData().keySet().toArray(); //Get the keys
-//			for(int i = 0; i < 88; i++) {
-//				System.out.print(this.data.get(keys[0]).get(i));
-//				System.out.print(" - " + this.data.get(keys[1]).get(i));
-//				System.out.println(" - " + this.data.get(keys[2]).get(i));
-//			}
 			return this.getData().get(keys[0]).size(); //Send the number of lines of the first column given that every column have the same amount of lines
 		}
 	}
 	
+	/**
+	 * @return the number of column
+	 */
 	public int getNbColumns() {
 		return this.getData().size();
 	}
 	
-	//Setters
 	private void setData(HashMap<String, ArrayList> data) throws Exception 
 	{		
 		if(!Dataframe.isValidDataframe(data))
@@ -178,11 +246,23 @@ public class Dataframe {
 		this.data = data;
 	}
 	
+	public int getMaxElementLength() {
+		return maxElementLength;
+	}
+
+	public void setMaxElementLength(int maxElementLength) {
+		this.maxElementLength = maxElementLength;
+	}
+	
 	
 	/*
 	 * Validation Methods
 	 */
-	
+
+	/**
+	 * @param dataframe
+	 * @return if the dataframe isValide
+	 */
 	public static boolean isValidDataframe(HashMap<String, ArrayList>  dataframe)
 	{
 		int j = 0;
@@ -195,28 +275,69 @@ public class Dataframe {
 			
 			
 			for(Object o: line) {
-				if(o.getClass().getName() != type)
+				if(o.getClass().getName() != type && !type.equals("".getClass().getName())) {
 					return false;
+				}
 			}
 			j++;
 		}
 		return true;
 	}
 	
+	/**
+	 * Return a subset of the dataframe
+	 * @param i the line to start
+	 * @param j the line to stop, if j > nbLine return until the end
+	 * @return the subset
+	 * @throws Exception 
+	 */
+	public Dataframe subset(int i, int j) throws Exception
+	{
+		if(i < 0 || i > this.getNbLines() || i >= j)
+			throw new Exception("The from value must be greater than 0 and less than the number of lines");
+		
+		if(j > this.getNbLines())
+			j = this.getNbLines();
+		
+		HashMap<String, ArrayList> m = new HashMap<String, ArrayList>();
+		
+		for(String key: this.getData().keySet()) {
+			ArrayList newArrayList = (ArrayList) this.getData().get(key).clone();
+			newArrayList.clear();
+			for(int k = i; k < j; k++)
+				newArrayList.add(this.getData().get(key).get(k));
+			m.put(key, newArrayList);						
+		}
+		
+		Dataframe subD = new Dataframe(m);
+		
+		subD.setMaxElementLength(this.getMaxElementLength());
+		
+		return subD;
+	}
 	
 	/*
 	 * toString Methods
 	 */
 	
+	/**
+	 * Return one line in string format
+	 * @param i the line to return
+	 * @return the string
+	 */
 	private String lineToString(int i){
-		String s = "";
+		String add = this.getAddForToString();
+		String s = "" + i + ": ";
+			for(int j = s.length(); j < add.length(); j++) {
+				s = " " + s;
+			}
 		for(String key: this.getData().keySet()) {
 			String elementTmp = "";
 			try {
-				elementTmp = this.getCell(key, i).toString();
+				elementTmp += this.getCell(key, i).toString();
 			} catch(Exception e) {}
 			
-			while(elementTmp.length() < this.maxElementLength)
+			while(elementTmp.length() < this.getMaxElementLength())
 				elementTmp += " ";
 			s += elementTmp;
 		}
@@ -224,11 +345,15 @@ public class Dataframe {
 		return s;
 	}
 	
-	private String labelsToString(){
-		String s = "";
+	/**
+	 * Return the labels in string format
+	 * @return the string
+	 */
+	private String labelsToString(){		
+		String s = this.getAddForToString();
 		for(String key: this.getData().keySet()) {
 			String elementTmp = key;
-			while(elementTmp.length() < this.maxElementLength)
+			while(elementTmp.length() < this.getMaxElementLength())
 				elementTmp += " ";
 			s += elementTmp;
 		}
@@ -236,6 +361,68 @@ public class Dataframe {
 		return s;
 	}
 	
+	/**
+	 * Return the good number of white space in order to pretty print the number of line
+	 * @return white space in string
+	 */
+	private String getAddForToString()
+	{
+		String s = "";
+		String nbLine = "" + this.getNbLines() + ": ";
+		for(int i = 0; i < nbLine.length(); i++)
+			s += " ";
+		
+		return s;
+	}
+	
+	/**
+	 * Return the n first lines in string format
+	 * @param n the number of line to print
+	 * @return the string
+	 */
+	public String nFirstLineToString(int n)
+	{
+		String s = "";
+		s += labelsToString();
+		
+		int max = n;
+		if(this.getNbLines() < max)
+		{
+			max = this.getNbLines();
+		}
+		
+		for(int i = 0; i < n; i++) {
+			s += lineToString(i);
+		}
+		
+		return s;
+	}
+
+	/**
+	 * Return the n last lines in string format
+	 * @param n the number of line to print
+	 * @return the string
+	 */
+	public String nLastLineToString(int n)
+	{
+		String s = "";
+		s += labelsToString();
+		
+		int i = this.getNbLines() - n;
+		if(i < 0)
+			i = 0;
+		
+		for(int idx = i; idx < this.getNbLines(); idx++) {
+			s += lineToString(idx);
+		}
+		
+		return s;
+	}
+
+	/**
+	 * Return the data in string format
+	 * @return the string
+	 */
 	public String toString() {
 		String s = "";
 		s += labelsToString();
