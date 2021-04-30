@@ -409,6 +409,31 @@ public class Dataframe {
 		return subD;
 	}
 	
+	/**
+	 * Returns a subset of the dataframe
+	 * @param the labels to put in the subset
+	 * @return the subset
+	 * @throws Exception Throws an exception if the subset interval isn't valid (i must be greater than j and 0)
+	 */
+	public Dataframe subset(String...labels) throws Exception
+	{
+		for(String label: labels)
+			if(!this.getData().containsKey(label))
+				throw new Exception("The label " + label + " does not exist");
+		
+		HashMap<String, ArrayList> m = new HashMap<String, ArrayList>();
+		
+		for(String key: labels) {
+			m.put(key, this.getData().get(key));						
+		}
+		
+		Dataframe subD = new Dataframe(m);
+		
+		subD.setMaxElementLength(this.getMaxElementLength());
+		
+		return subD;
+	}	
+	
 	/*
 	 * toString Methods
 	 */
